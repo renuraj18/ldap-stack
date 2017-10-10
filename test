@@ -1,0 +1,74 @@
+networks:
+  my-network:
+    driver: overlay
+services:
+  ldap:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        max_attempts: 3
+    environment:
+      GERRIT_PASSWORD:gerrit123: null
+      INITIAL_ADMIN_PASSWORD:admin123: null
+      INITIAL_ADMIN_USER:admin: null
+      JENKINS_PASSWORD:jenkins123: null
+      SLAPD_DOMAIN:ldap.example.com: null
+      SLAPD_FULL_DOMAIN:dc: ldap,dc=example,dc=com
+      SLAPD_PASSWORD:admin123: null
+    image: accenture/adop-ldap:0.1.3
+    networks:
+      my-network: null
+    ports:
+    - 389:389/tcp
+    volumes:
+    - ldap_db:/var/lib/ldap:rw
+    - ldap_static:/etc/ldap:rw
+  ldap-phpadmin:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        max_attempts: 3
+    environment:
+      LDAP_SERVER_BASE_DN:dc: ldap,dc=example,dc=com
+      LDAP_SERVER_BIND_ID:cn: admin,dc=ldap,dc=example,dc=com
+      LDAP_SERVER_HOST:ldap: null
+      LDAP_SERVER_NAME:LDAP: null
+      LDAP_SERVER_PORT:389: null
+    image: accenture/adop-ldap-phpadmin:0.1.0
+    networks:
+      my-network: null
+    ports:
+    - 8081:80/tcp
+  nginx:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        max_attempts: 3
+    environment:
+      LDAP_GROUP_ATTRIBUTE: member
+      LDAP_PASSWORD:admin123: null
+      LDAP_SERVER:ldap:389: null
+      LDAP_USERNAME:cn: admin,dc=ldap,dc=example,dc=com
+      LDAP_USER_BASE_DN:ou: people,dc=ldap,dc=example,dc=com
+      LDAP_USER_ID_ATTRIBUTE: cn
+      LDAP_USER_OBJECT_CLASS: inetOrgPerson
+      constraint:tier: =public
+    image: accenture/adop-nginx:0.3.0
+    networks:
+      my-network: null
+    ports:
+    - 80:80/tcp
+    - 443:443/tcp
+    volumes:
+    - nginx_config:/etc/nginx:rw
+    - nginx_releasenote:/usr/share/nginx/html:rw
+version: '3.0'
+volumes:
+  ldap_db: {}
+  ldap_static: {}
+  nginx_config: {}
+  nginx_releasenote: {}
+

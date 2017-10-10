@@ -2,13 +2,20 @@
 version: "3"
 services: 
   ldap: 
-    env_file: ldap.env
     deploy: 
       replicas: 1
       restart_policy:
         condition: any
         max_attempts: 3
     image: "accenture/adop-ldap:0.1.3"
+    environment:
+      - INITIAL_ADMIN_USER:${INITIAL_ADMIN_USER}
+      - INITIAL_ADMIN_PASSWORD:${INITIAL_ADMIN_PASSWORD}
+      - JENKINS_PASSWORD:${JENKINS_PWD}
+      - GERRIT_PASSWORD:${GERRIT_PWD}
+      - "SLAPD_PASSWORD:${LDAP_PWD}"
+      - SLAPD_DOMAIN:${LDAP_DOMAIN}
+      - SLAPD_FULL_DOMAIN:${LDAP_FULL_DOMAIN} 
     networks: 
       - my-network
     ports: 
@@ -24,15 +31,41 @@ services:
         condition: any
         max_attempts: 3
     image: "accenture/adop-ldap-phpadmin:0.1.0"
+    environment:
+      - LDAP_SERVER_BIND_ID:${LDAP_ADMIN},${LDAP_FULL_DOMAIN}
+      - LDAP_SERVER_BASE_DN:${LDAP_FULL_DOMAIN} 
     networks: 
       - my-network
     ports:
-      - "8081:80" 
+      - "8081:80"
+  nginx:
+    env_file: nginx.env
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        max_attempts: 3
+    image: "accenture/adop-nginx:0.3.0"
+    environment:
+      - LDAP_SERVER:${LDAP_SERVER}
+      - LDAP_USERNAME:${LDAP_ADMIN},${LDAP_FULL_DOMAIN}
+      - LDAP_PASSWORD:${LDAP_PWD}
+      - LDAP_USER_BASE_DN:${LDAP_USER_BASE_DN},${LDAP_FULL_DOMAIN}
+    networks: 
+      - my-network
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "nginx_config:/etc/nginx"
+      - "nginx_releasenote:/usr/share/nginx/html"
+      
 volumes:
   ldap_db:
   ldap_static:
+  nginx_config:
+  nginx_releasenote:
 
 networks:
   my-network:
     driver: overlay
-
