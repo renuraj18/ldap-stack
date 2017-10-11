@@ -1,0 +1,23 @@
+---
+
+version: "3"
+
+services:
+  elk:
+    env_file: svn.env
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        max_attempts: 3
+    image: sebp/elk
+    networks:
+      -  my-network
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+networks:
+  my-network:
+    driver: overlay
+    external: true

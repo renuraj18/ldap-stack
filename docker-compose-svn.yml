@@ -1,0 +1,22 @@
+---
+
+version: "3"
+
+services:
+  svn:
+    env_file: svn.env
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: any
+        max_attempts: 3
+    image: projectethan007/svn:1.0
+    networks:
+      -  my-network
+    ports:
+      - "3690:3690"
+      - "9090:9090"
+networks:
+  my-network:
+    driver: overlay
+    external: true

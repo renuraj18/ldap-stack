@@ -1,0 +1,25 @@
+--- 
+version: "3"
+services: 
+  nginx:
+    env_file: nginx.env
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: none
+    image: "nginx"
+    networks: 
+      - my-network
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - "nginx_config:/etc/nginx"
+      
+volumes:
+  nginx_config:
+
+networks:
+  my-network:
+    driver: overlay
+    external: true
