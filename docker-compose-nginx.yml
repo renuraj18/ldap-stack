@@ -4,7 +4,7 @@ services:
   nginx:
     env_file: nginx.env
     deploy:
-      replicas: 1
+      replicas: 2
       restart_policy:
         condition: none
     image: "nginx"

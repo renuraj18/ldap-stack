@@ -4,8 +4,10 @@ version: "3"
 
 services:
   elk:
-    env_file: svn.env
     deploy:
+      placement:
+        constraints:
+          - node.hostname == node2
       replicas: 1
       restart_policy:
         condition: any
