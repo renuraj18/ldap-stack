@@ -1,0 +1,20 @@
+---
+version: "3"
+services:
+  swarm-visualizer:
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: none
+    image: "dockersamples/visualizer"
+    networks:
+      - my-network
+    ports:
+      - "8085:8080"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  my-network:
+    driver: overlay
+    external: true
