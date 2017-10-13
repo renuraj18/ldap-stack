@@ -1,0 +1,24 @@
+---
+version: "3"
+
+services:
+  portainer:
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: none
+    image: "portainer/portainer"
+    networks:
+      - my-network
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+
+networks:
+  my-network:
+    driver: overlay
+    external: true
