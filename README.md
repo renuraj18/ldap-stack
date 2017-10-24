@@ -43,7 +43,7 @@ docker swarm deploy -c docker-compose-ldap.yml ldap
 docker-compose -f docker-compose-ldap.yml up
 ```
 
-# swarm viualizer
+# swarm visualizer
 This stack will bring up the Swarm vizualiser which can be useful to vizualize th stack
 
 ```

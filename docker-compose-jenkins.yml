@@ -1,25 +1,22 @@
---- 
+---
 version: "3"
-services: 
-  nginx:
-    env_file: nginx.env
+services:
+  jenkins:
     deploy:
-      replicas: 2
+      replicas: 1
       restart_policy:
         condition: any
-    image: "nginx"
-    networks: 
+    image: "jenkins"
+    networks:
       - my-network
     ports:
-      - "80:80"
-      - "443:443"
+      - "8080:8080"
     volumes:
-      - nginx_config:/etc/nginx
-      
+      - "jenkins-home:/var/jenkins_home"
+
 volumes:
-  nginx_config:
+  jenkins-home:
 #    driver: rexray/ebs
-    
 
 networks:
   my-network:
