@@ -7,7 +7,7 @@ services:
       replicas: 2
       restart_policy:
         condition: any
-    image: "accenture/adop-nginx"
+    image: "renuraj18/nginx"
     networks: 
       - my-network
     ports:
