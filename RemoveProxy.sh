@@ -9,3 +9,4 @@ if grep -e "###PROXY:$PROXYU###" -e "###PROXY:$PROXYU###" $TOOLS_FILE; then
 else
 	echo "Proxy $PROXY not found"
 fi
+rm $Mount/release_note/bp/$PROXY-component.json

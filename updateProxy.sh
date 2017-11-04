@@ -9,3 +9,4 @@ else
 	mv tmp $TOOLS_FILE
 fi
 cat $TOOLS_FILE
+cp $PROXY/*.json $Mount/release_note/bp

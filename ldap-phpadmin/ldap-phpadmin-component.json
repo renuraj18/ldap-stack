@@ -1,0 +1,11 @@
+{
+                "components" : [
+                        {
+                        "id": "ldap-phpadmin",
+                        "title": "phpldapadmin",
+                        "img": "img/phpldapadmin.png",
+                        "description": "Browser to manage your LDAP server",
+                        "link": "/ldap-phpadmin/"
+                        }
+						]
+}
