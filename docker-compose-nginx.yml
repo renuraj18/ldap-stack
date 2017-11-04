@@ -7,7 +7,7 @@ services:
       replicas: 2
       restart_policy:
         condition: any
-    image: "nginx"
+    image: "accenture/adop-nginx"
     networks: 
       - my-network
     ports:
@@ -15,9 +15,11 @@ services:
       - "443:443"
     volumes:
       - nginx_config:/etc/nginx
+      - nginx_resources:/resources
       
 volumes:
   nginx_config:
+  nginx_resources:
 #    driver: rexray/ebs
     
 
