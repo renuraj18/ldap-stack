@@ -1,0 +1,11 @@
+{
+                "components" : [
+                        {
+                        "id": "visualizer",
+                        "title": "visualizer",
+                        "img": "img/visualizer.png",
+                        "description": "Swarm visualizer tool",
+                        "link": "/swarm-visualizer/"
+                        }
+						]
+}

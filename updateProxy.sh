@@ -10,3 +10,4 @@ else
 fi
 cat $TOOLS_FILE
 cp $PROXY/*.json $Mount/release_note/bp
+cp $PROXY/*.png $Mount/release_note/img

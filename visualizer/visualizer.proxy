@@ -1,0 +1,10 @@
+###PROXY:VISUALIZER###
+    location ~* /swarm-visualizer {
+        rewrite ^/swarm-visualizer/(.*)$ /$1 break;
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_redirect off;
+        proxy_pass http://swarm-visualizer:8080;
+    }
+###PROXY:VISUALIZER###
