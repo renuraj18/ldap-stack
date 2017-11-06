@@ -1,0 +1,28 @@
+---
+
+version: "3"
+
+services:
+  dashing:
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      replicas: 1
+      restart_policy:
+        condition: any
+    image: frvi/dashing
+    networks:
+      - my-network
+    expose:
+      - 3030
+    volumes:
+      - "dashing_board:/dashing"
+
+volumes:
+  dashing_board:
+
+networks:
+  my-network:
+    driver: overlay
+    external: true 

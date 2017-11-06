@@ -1,0 +1,11 @@
+{
+                "components" : [
+                        {
+                        "id": "portainer",
+                        "title": "portainer",
+                        "img": "img/portainer.png",
+                        "description": "Portainer",
+                        "link": "/portainer/"
+                        }
+						]
+}
