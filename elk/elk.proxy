@@ -1,0 +1,32 @@
+###PROXY:ELK###
+   location  /kibana {
+        rewrite /kibana(.*) /$1  break;
+        proxy_pass         http://elk:5601;
+        proxy_redirect     off;
+        proxy_set_header   Host $host;
+    }
+    location /kibana/status {
+        proxy_pass         http://elk:5601/status;
+    }
+    location /app/kibana/status {
+        proxy_pass         http://elk:5601/status;
+    }
+    location ~* /app/kibana.* {
+        proxy_pass         http://elk:5601;
+    }
+    location ~* /bundles/.* {
+        proxy_pass         http://elk:5601;
+    }
+    location = /status {
+        proxy_pass         http://elk:5601;
+    }
+     location ~ /plugins/kibana/.* {
+        proxy_pass         http://elk:5601;
+    }
+    location = /api/status {
+        proxy_pass         http://elk:5601;
+    }
+    location ~* /elasticsearch/.* {
+        proxy_pass         http://elk:5601;
+    }
+###PROXY:ELK###

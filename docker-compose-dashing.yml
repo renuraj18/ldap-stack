@@ -11,7 +11,7 @@ services:
       replicas: 1
       restart_policy:
         condition: any
-    image: frvi/dashing
+    image: renuraj18/dashing:1.0
     networks:
       - my-network
     expose:

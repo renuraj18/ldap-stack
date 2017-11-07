@@ -3,7 +3,8 @@
 version: "3"
 
 services:
-  elk:
+  tomcat:
+    env_file: tomcat_filebeat.env
     deploy:
       placement:
         constraints:
@@ -12,20 +13,12 @@ services:
       restart_policy:
         condition: any
         max_attempts: 3
-    image: projectethan007/elk:1.0.0
-    volumes:
-      - "elk_config:/etc"
-      - "elk_data:/var"
+    image: projectethan007/tomcat:1.0.0
     networks:
       -  my-network
     ports:
-      - "5601:5601"
-      - "9200:9200"
-      - "5044:5044"
-volumes:
-  elk_config:
-  elk_data:
+      - "8888:8080"
 networks:
   my-network:
-    driver: overlay
-    external: true
+   driver: overlay
+   external: true

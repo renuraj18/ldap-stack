@@ -1,0 +1,10 @@
+###PROXY:SVN###
+    location ~* /svn {
+        rewrite ^/svn/(.*)$ /$1 break;
+        proxy_set_header X-Real-IP  $remote_addr;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header Host $host;
+        proxy_redirect off;
+        proxy_pass http://svn:9090;
+    }
+###PROXY:LDAP-PHPADMIN###
